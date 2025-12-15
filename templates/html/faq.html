@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SkinAI - FAQ</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo"><a href="home.html">SkinAI</a></div>
+    <nav class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </nav>
+  </header>
+
+  <div class="page-content">
+    <section class="faq">
+      <h2>FAQ</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">What is SkinAI?</button>
+          <div class="accordion-body">SkinAI is an AI-powered tool for analyzing skin conditions.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Is this a medical diagnosis?</button>
+          <div class="accordion-body">No, this is not a diagnosis. Consult your doctor for medical advice.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">How often should you use SkinAI?</button>
+          <div class="accordion-body">For best results, check your skin weekly or whenever you notice changes.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">How to prepare for a dermatology appointment using SkinAI?</button>
+          <div class="accordion-body">Upload recent photos and notes from SkinAI to help your dermatologist understand your skin history.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">How to delete my account?</button>
+          <div class="accordion-body">You can request account deletion in your profile settings or contact support.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">How to save results?</button>
+          <div class="accordion-body">Results can be downloaded as PDF or saved within your account for future reference.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Is my personal information safe?</button>
+          <div class="accordion-body">Yes, all data is encrypted and securely stored. We never share information without consent.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Does SkinAI replace the Doctor?</button>
+          <div class="accordion-body">No, SkinAI provides insights and suggestions, but cannot replace professional medical advice.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Who should use SkinAI?</button>
+          <div class="accordion-body">Anyone looking to monitor skin health or detect early issues can benefit from SkinAI.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="{{ url_for('static', filename='js/accordion.js') }}"></script>
+</body>
+</html>

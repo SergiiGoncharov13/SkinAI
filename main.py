@@ -13,7 +13,7 @@ from models.user_model import User
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="templates/html")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 os.makedirs("uploaded_files", exist_ok=True)
 

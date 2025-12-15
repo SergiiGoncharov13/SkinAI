@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SkinAI - Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo"><a href="home.html">SkinAI</a></div>
+    <nav class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="login.html" id="logoutBtn">Logout</a>
+    </nav>
+  </header>
+
+  <div class="page-content">
+    <main class="dashboard-main">
+      <section class="user-info">
+        <h2>User Information</h2>
+        <p>Email: <span id="userEmail"></span></p>
+      </section>
+
+      <section class="scan-history">
+        <h2>Your Scan History</h2>
+        <ul id="scanList">
+          <li><span>Birthmark on left arm</span><span class="status-ok">OK</span></li>
+          <li><span>Birthmark on back</span><span class="status-alert">See Doctor</span></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    const logout = document.getElementById('logoutBtn');
+    if (logout) {
+      logout.addEventListener('click', function (e) {
+        localStorage.removeItem('loggedInUser');
+
+      });
+    }
+  </script>
+</body>
+</html>
