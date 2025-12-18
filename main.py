@@ -22,17 +22,23 @@ os.makedirs("uploaded_files", exist_ok=True)
 async def home(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
+@app.get("/faq")
+def faq(request: Request):
+    return templates.TemplateResponse("faq.html", {"request": request})
+
+@app.get("/login")
+def login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/register")
+def register(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
 
 @app.post("/upload")
 async def upload_file(file: UploadFile):
     with open(f"uploaded_files/{file.filename}", "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     return {"filename": file.filename}
-
-
-@app.get("/login", response_class=HTMLResponse)
-async def login_form(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
 
 
 @app.post("/login", response_class=HTMLResponse)

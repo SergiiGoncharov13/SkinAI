@@ -8,11 +8,11 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="logo"><a href="home.html">SkinAI</a></div>
+    <div class="logo"><a href="/">SkinAI</a></div>
     <nav class="nav-links">
-      <a href="home.html">Home</a>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
     </nav>
   </header>
 
@@ -59,6 +59,6 @@
       </div>
     </section>
   </div>
-  <script src="{{ url_for('static', filename='js/accordion.js') }}"></script>
+  <script src="{{ url_for('static', path='js/accordion.js') }}"></script>
 </body>
 </html>

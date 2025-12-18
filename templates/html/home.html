@@ -8,17 +8,17 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="logo"><a href="home.html">SkinAI</a></div>
+    <div class="logo"><a href="/">SkinAI</a></div>
     <nav class="nav-links">
-      <a href="faq.html">FAQ</a>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
+      <a href="/faq">FAQ</a>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
     </nav>
   </header>
 
   <div class="page-content">
     <section class="hero">
-      <img src="../assets/images/hero.jpeg" alt="SkinAI hero" class="hero-img" />
+      <img src="{{ url_for('static', path='assets/images/hero.jpeg') }}" alt="SkinAI hero" class="hero-img" />
       <h1>AI-Powered Skin Analysis</h1>
       <p>Upload a photo and get instant skin health insights.</p>
       <button class="cta-btn" id="trySkinAI">Try SkinAI</button>
@@ -27,10 +27,10 @@
     <section class="steps">
       <h2>Check your skin!</h2>
       <div class="step-grid">
-        <div class="step-item"><p>Step 1: Take a photo</p><img src="../assets/images/steps/step1.png" alt=""></div>
-        <div class="step-item"><p>Step 2: AI analyzes</p><img src="../assets/images/steps/step2.png" alt=""></div>
-        <div class="step-item"><p>Step 3: PDF report</p><img src="../assets/images/steps/step3.png" alt=""></div>
-        <div class="step-item"><p>Step 4: Expert tips</p><img src="../assets/images/steps/step4.png" alt=""></div>
+        <div class="step-item"><p>Step 1: Take a photo</p><img src="{{ url_for('static', path='assets/images/steps/step1.png') }}" alt=""></div>
+        <div class="step-item"><p>Step 2: AI analyzes</p><img src="{{ url_for('static', path='assets/images/steps/step2.png') }}" alt=""></div>
+        <div class="step-item"><p>Step 3: PDF report</p><img src="{{ url_for('static', path='assets/images/steps/step3.png') }}" alt=""></div>
+        <div class="step-item"><p>Step 4: Expert tips</p><img src="{{ url_for('static', path='assets/images/steps/step4.png') }}" alt=""></div>
       </div>
       <button class="cta-btn get-instant-btn" id="getInstantResult">Get Instant Result</button>
     </section>
@@ -38,30 +38,30 @@
     <section class="why">
       <h2>Why SkinAI?</h2>
       <div class="icons-grid">
-        <div class="item"><img src="../assets/images/usage/shield.jpeg" alt=""><p><strong>Safe & Secure</strong><br/>Data is encrypted and private.</p></div>
-        <div class="item"><img src="../assets/images/usage/clock.jpeg" alt=""><p><strong>Fast</strong><br/>Instant analysis without appointments.</p></div>
-        <div class="item"><img src="../assets/images/usage/accuracy.jpeg" alt=""><p><strong>Accurate</strong><br/>Dermatology-trained models.</p></div>
-        <div class="item"><img src="../assets/images/usage/leaf.jpeg" alt=""><p><strong>Eco-friendly</strong><br/>Fewer unnecessary clinic visits.</p></div>
+        <div class="item"><img src="{{ url_for('static', path='assets/images/usage/shield.jpeg') }}" alt=""><p><strong>Safe & Secure</strong><br/>Data is encrypted and private.</p></div>
+        <div class="item"><img src="{{ url_for('static', path='assets/images/usage/clock.jpeg') }}" alt=""><p><strong>Fast</strong><br/>Instant analysis without appointments.</p></div>
+        <div class="item"><img src="{{ url_for('static', path='assets/images/usage/accuracy.jpeg') }}" alt=""><p><strong>Accurate</strong><br/>Dermatology-trained models.</p></div>
+        <div class="item"><img src="{{ url_for('static', path='assets/images/usage/leaf.jpeg') }}" alt=""><p><strong>Eco-friendly</strong><br/>Fewer unnecessary clinic visits.</p></div>
       </div>
     </section>
 
     <section class="ai-analysis">
       <h2>How AI analyzes your skin</h2>
       <div class="ai-grid">
-        <div class="ai-step"><img src="../assets/images/ai/step1.jpeg" alt=""><p>Image scanning and pre-processing</p></div>
-        <div class="ai-step"><img src="../assets/images/ai/step2.jpeg" alt=""><p>Model analysis for patterns & features</p></div>
-        <div class="ai-step"><img src="../assets/images/ai/step3.png" alt=""><p>Report generation with recommendations</p></div>
+        <div class="ai-step"><img src="{{ url_for('static', path='assets/images/ai/step1.jpeg') }}" alt=""><p>Image scanning and pre-processing</p></div>
+        <div class="ai-step"><img src="{{ url_for('static', path='assets/images/ai/step2.jpeg') }}" alt=""><p>Model analysis for patterns & features</p></div>
+        <div class="ai-step"><img src="{{ url_for('static', path='assets/images/ai/step3.png') }}" alt=""><p>Report generation with recommendations</p></div>
       </div>
     </section>
 
     <section class="reviews">
       <h2>Reviews</h2>
-      <div class="review-item"><img src="../assets/images/reviews/review1.jpeg" alt=""><p>"Amazing AI analysis!"</p></div>
-      <div class="review-item"><img src="../assets/images/reviews/review2.jpeg" alt=""><p>"Quick and accurate."</p></div>
+      <div class="review-item"><img src="{{ url_for('static', path='assets/images/reviews/review1.jpeg') }}" alt=""><p>"Amazing AI analysis!"</p></div>
+      <div class="review-item"><img src="{{ url_for('static', path='assets/images/reviews/review2.jpeg') }}" alt=""><p>"Quick and accurate."</p></div>
     </section>
   </div>
 
-  <script src="../js/accordion.js"></script>
-  <script src="../js/main.js"></script>
+  <script src="{{ url_for('static', path='js/accordion.js') }}"></script>
+  <script src="{{ url_for('static', path='js/main.js') }}"></script>  
 </body>
 </html>

@@ -8,11 +8,11 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="logo"><a href="home.html">SkinAI</a></div>
+    <div class="logo"><a href="/">SkinAI</a></div>
     <nav class="nav-links">
-      <a href="home.html">Home</a>
-      <a href="faq.html">FAQ</a>
-      <a href="login.html">Login</a>
+      <a href="/">Home</a>
+      <a href="/faq">FAQ</a>
+      <a href="/login">Login</a>
     </nav>
   </header>
 
@@ -20,7 +20,7 @@
     <main class="auth-page">
       <div class="auth-box">
         <h1>Register</h1>
-        <form id="registerForm">
+        <form id="registerForm" action="/signup" method="post">
           <label for="firstName">First Name</label>
           <input id="firstName" type="text" required />
           <label for="lastName">Last Name</label>
@@ -33,11 +33,11 @@
           <input id="regPassword" type="password" required />
           <button type="submit">Register</button>
         </form>
-        <p class="switch-msg">Already have an account? <a href="login.html">Login</a></p>
+        <p class="switch-msg">Already have an account? <a href="/login">Login</a></p>
       </div>
     </main>
   </div>
 
-  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+  <script src="{{ url_for('static', path='js/auth.js') }}"></script>
 </body>
 </html>

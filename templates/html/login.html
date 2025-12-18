@@ -8,11 +8,11 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="logo"><a href="home.html">SkinAI</a></div>
+    <div class="logo"><a href="/">SkinAI</a></div>
     <nav class="nav-links">
-      <a href="home.html">Home</a>
-      <a href="faq.html">FAQ</a>
-      <a href="register.html">Register</a>
+      <a href="/">Home</a>
+      <a href="/faq">FAQ</a>
+      <a href="/register">Register</a>
     </nav>
   </header>
 
@@ -27,11 +27,11 @@
           <input id="password" type="password" required placeholder="Your password" />
           <button type="submit">Login</button>
         </form>
-        <p class="switch-msg">Don't have an account? <a href="register.html">Register</a></p>
+        <p class="switch-msg">Don't have an account? <a href="/register">Register</a></p>
       </div>
     </main>
   </div>
 
-  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+  <script src="{{ url_for('static', path='js/auth.js') }}"></script>
 </body>
 </html>
