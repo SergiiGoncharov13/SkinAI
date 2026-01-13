@@ -12,6 +12,6 @@ scikit-learn
 pandas
 seaborn
 wandb
-streamli
+streamlit
 timm
 watchdog
