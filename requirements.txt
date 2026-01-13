@@ -3,3 +3,15 @@ uvicorn
 SQLAlchemy
 email-validator
 python-multipart
+streamlit
+torch
+torchvision
+grad-cam
+pillow
+scikit-learn
+pandas
+seaborn
+wandb
+streamli
+timm
+watchdog
