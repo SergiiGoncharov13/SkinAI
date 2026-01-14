@@ -1,8 +1,16 @@
-from fastapi import FastAPI, Request, UploadFile, Depends, Form
+from fastapi import FastAPI, Request, UploadFile, File, Depends, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
+from api.history import router as history_router
+from database import Base, engine
+from models import history 
+
+Base.metadata.create_all(bind=engine)
+
+from ml.inference import analyze_image
+import uuid
 import shutil
 import os
 
@@ -13,6 +21,7 @@ from models.user_model import User
 
 app = FastAPI()
 
+app.include_router(history_router, prefix="/api")
 templates = Jinja2Templates(directory="templates/html")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 os.makedirs("uploaded_files", exist_ok=True)
@@ -38,6 +47,21 @@ def register(request: Request):
 def register(request: Request):
     return templates.TemplateResponse("dashboard.html", {"request": request})
 
+@app.post("/analyze")
+async def analyze(image: UploadFile = File(...)):
+    filename = f"{uuid.uuid4()}.jpg"
+    path = f"uploaded_files/{filename}"
+
+    with open(path, "wb") as buffer:
+        shutil.copyfileobj(image.file, buffer)
+
+    result = analyze_image(path)
+
+    return {
+        "status": "success",
+        "result": result
+    }
+    
 @app.post("/upload")
 async def upload_file(file: UploadFile):
     with open(f"uploaded_files/{file.filename}", "wb") as buffer:

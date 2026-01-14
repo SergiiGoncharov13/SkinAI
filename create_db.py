@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from models.base_model import Base
 from models.user_model import User
-from models.history_model import History
+from models.history import History
 
 
 DATABASE_URL = "sqlite:///skinai.db"

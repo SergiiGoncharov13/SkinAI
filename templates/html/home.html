@@ -6,7 +6,7 @@
     <title>SkinAI — попередня оцінка ризику змін шкіри</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
@@ -55,8 +55,10 @@
         </div>
 
         <div class="hero-image">
-          <img src="{{ url_for('static', path='assets/hero_ai_skin.png') }}" 
-          alt="AI skin analysis illustration"/>
+          <img
+            src="{{ url_for('static', path='assets/hero_ai_skin.png') }}"
+            alt="AI skin analysis illustration"
+          />
         </div>
       </div>
     </section>
@@ -87,8 +89,10 @@
 
         <div class="steps">
           <div class="step-card">
-            <img src="{{ url_for('static', path='assets/step1_capture.jpg') }}" 
-            alt="Зйомка родимки"/>
+            <img
+              src="{{ url_for('static', path='assets/step1_capture.jpg') }}"
+              alt="Зйомка родимки"
+            />
             <span class="step-number">1</span>
             <h3>Зробіть фото родимки</h3>
             <p>
@@ -100,8 +104,10 @@
             </small>
           </div>
           <div class="step-card">
-            <img src="{{ url_for('static', path='assets/step2_capture.jpg') }}" 
-            alt="Завантаження зображення"/>
+            <img
+              src="{{ url_for('static', path='assets/step2_capture.jpg') }}"
+              alt="Завантаження зображення"
+            />
             <span class="step-number">2</span>
             <h3>Завантажте зображення</h3>
             <p>
@@ -111,8 +117,10 @@
           </div>
 
           <div class="step-card">
-            <img src="{{ url_for('static', path='assets/step3_capture.jpg') }}" 
-            alt="Аналіз зображення"/>
+            <img
+              src="{{ url_for('static', path='assets/step3_capture.jpg') }}"
+              alt="Аналіз зображення"
+            />
             <span class="step-number">3</span>
             <h3>Отримайте оцінку ризику</h3>
             <p>
@@ -166,8 +174,10 @@
 
         <div class="benefits-grid">
           <div class="benefit-card">
-            <img src="{{ url_for('static', path='assets/benefit-risk.jpg') }}" 
-            alt="AI risk assessment"/>
+            <img
+              src="{{ url_for('static', path='assets/benefit-risk.jpg') }}"
+              alt="AI risk assessment"
+            />
             <h3>Попередню AI-оцінку ризику</h3>
             <p>
               SkinAI аналізує зображення родимки та допомагає зрозуміти, чи може
@@ -176,8 +186,10 @@
           </div>
 
           <div class="benefit-card">
-            <img src="{{ url_for('static', path='assets/benefit-clear.jpg') }}" 
-            alt="Clear results"/>
+            <img
+              src="{{ url_for('static', path='assets/benefit-clear.jpg') }}"
+              alt="Clear results"
+            />
             <h3>Зрозумілий і прозорий результат</h3>
             <p>
               Результати подаються у простій формі — без складних термінів та
@@ -186,8 +198,10 @@
           </div>
 
           <div class="benefit-card">
-            <img src="{{ url_for('static', path='assets/benefit-guidance.png') }}" 
-            alt="Next steps guidance"/>
+            <img
+              src="{{ url_for('static', path='assets/benefit-guidance.png') }}"
+              alt="Next steps guidance"
+            />
             <h3>Рекомендацію щодо подальших дій</h3>
             <p>
               SkinAI підказує, чи варто звернутися до лікаря або продовжити
@@ -196,8 +210,10 @@
           </div>
 
           <div class="benefit-card">
-            <img src="{{ url_for('static', path='assets/benefit-history.png') }}" 
-            alt="Analysis history"/>
+            <img
+              src="{{ url_for('static', path='assets/benefit-history.png') }}"
+              alt="Analysis history"
+            />
             <h3>Історію ваших перевірок</h3>
             <p>
               Усі результати зберігаються у вашому кабінеті для зручного
@@ -270,8 +286,5 @@
         </div>
       </div>
     </footer>
-
-    <!-- JS -->
-    <script src="{{ url_for('static', path='js/main.js') }}"></script>  
   </body>
 </html>

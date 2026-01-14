@@ -17,17 +17,14 @@
   </head>
 
   <body>
-    <script>
-      requireAuth();
-    </script>
     <!-- ================= HEADER ================= -->
     <header class="header">
       <div class="container header-inner">
         <div class="logo">SkinAI</div>
         <nav class="nav">
           <a href="/">На головну</a>
-          <a href="/faq">Як це працює</a>
-          <a onclick="logout()" id="logoutBtn" class="btn-outline">Вийти</a>
+          <a href="/faq">FAQ</a>
+          <a onclick="logout()" class="btn-outline">Вийти</a>
         </nav>
       </div>
     </header>
@@ -37,124 +34,83 @@
       <div class="container dashboard-grid">
         <!-- ===== LEFT COLUMN ===== -->
         <section class="dashboard-main">
-          <!-- WELCOME -->
+          <!-- ===== WELCOME ===== -->
           <div class="card welcome-card">
             <h1>Вітаємо у SkinAI 👋</h1>
             <p>
-              Тут ви можете виконати аналіз зображення, переглянути результати
-              та історію перевірок.
+              Тут ви можете виконувати перевірки зображень шкіри та відстежувати
+              результати з часом.
             </p>
           </div>
 
-          <!-- UPLOAD -->
-          <div class="card upload-card">
-            <div class="modal hidden" id="guideModal">
-              <div class="modal-content guide">
-                <h2>Перед початком</h2>
-                <p class="guide-subtitle">
-                  Дотримуйтесь цих рекомендацій, щоб отримати точніший результат
-                </p>
+          <!-- ===== NEW CHECK ===== -->
+          <div class="card new-check-card text-center">
+            <h2>Нова перевірка</h2>
+            <p class="section-subtitle">
+              Додайте фото родимки для попереднього аналізу
+            </p>
 
-                <ul class="guide-list">
-                  <li>📸 Зробіть фото при природному денному світлі</li>
-                  <li>🚫 Уникайте спалаху та тіней</li>
-                  <li>🔍 Родимка має бути повністю в кадрі</li>
-                  <li>📏 Відстань до шкіри — приблизно 10–15 см</li>
-                  <li>🎯 Фото повинно бути чітким і у фокусі</li>
-                </ul>
-
-                <div class="guide-note">
-                  SkinAI не встановлює медичних діагнозів і не замінює
-                  консультацію лікаря.
-                </div>
-                <button class="btn-primary large" id="guideConfirm">
-                  Зрозуміло
-                </button>
-              </div>
+            <div class="form-group">
+              <label for="imageTag">
+                Назва / опис <span>(необовʼязково)</span>
+              </label>
+              <input
+                type="text"
+                id="imageTag"
+                class="text-input"
+                placeholder="Наприклад, родимка на лівій руці"
+              />
             </div>
-
-            <section class="upload-section">
-              <h1>Почнемо</h1>
-              <p>Додайте фото родимки для аналізу</p>
-
-              <input type="file" id="imageInput" accept="image/*" hidden />
-
-              <button class="upload-btn" onclick="openFilePicker()">
+            <div class="text-center">
+              <button
+                class="btn-primary upload-main"
+                id="uploadBtn"
+                onclick="openFilePicker()"
+              >
                 📎 Завантажити фото
               </button>
-
-              <div class="upload-tip">
-                ℹ️ Для кращого результату використовуйте природне освітлення
-              </div>
-            </section>
-
-            <div class="modal hidden" id="cropModal">
-              <div class="modal-content">
-                <h2 class="text-center">Обріжте фото</h2>
-
-                <div class="crop-container">
-                  <img id="cropImage" />
-                </div>
-
-                <div class="crop-controls">
-                  <button id="zoomIn">+</button>
-                  <button id="zoomOut">−</button>
-                </div>
-
-                <div class="text-center">
-                  <button class="btn-primary" id="confirmCrop">
-                    Підтвердити
-                  </button>
-                </div>
-              </div>
             </div>
-
-            <p class="small-disclaimer">
-              Результат має інформаційний характер і не є медичним діагнозом.
-            </p>
+            <p class="hint">Зображення використовується лише для аналізу</p>
           </div>
 
-          <!-- LAST RESULT -->
-          <div class="card result-card">
-            <h2>Останній результат</h2>
+          <!-- ===== RESULT ===== -->
+          <div class="card result-card hidden" id="resultBlock">
+            <h2>Результат аналізу</h2>
 
-            <!-- MOCK RESULT -->
-            <div class="result-status warning">
-              <span class="badge">Підвищена увага</span>
-              <p>
-                Виявлені ознаки, які можуть потребувати консультації
-                дерматолога.
-              </p>
+            <!-- LOADING -->
+            <div class="result-loading hidden" id="resultLoading">
+              <div class="spinner"></div>
+              <p>Аналіз триває, будь ласка, зачекайте…</p>
             </div>
 
-            <div class="result-details">
-              <div><strong>Оцінка AI:</strong> можливий ризик</div>
-              <div><strong>Дата:</strong> 12.01.2026</div>
+            <!-- RESULT -->
+            <div class="result-content hidden" id="resultContent">
+              <span class="badge" id="aiBadge"></span>
+              <p id="aiText"></p>
+              <ul id="aiProbs"></ul>
             </div>
-
-            <button class="btn-secondary">Записатися до лікаря</button>
           </div>
         </section>
 
         <!-- ===== RIGHT COLUMN ===== -->
         <aside class="dashboard-side">
-          <!-- HISTORY -->
+          <!-- ===== HISTORY ===== -->
           <div class="card history-card">
-            <h3>Історія перевірок</h3>
+            <div class="history-header text-center">
+              <h3>Історія перевірок</h3>
+              <span class="history-count" id="historyCount">0</span>
+            </div>
 
-            <ul class="history-list">
-              <li>
-                <span class="dot safe"></span>
-                05.01.2026 — без ризику
-              </li>
-              <li>
-                <span class="dot warning"></span>
-                12.01.2026 — рекомендовано огляд
-              </li>
-            </ul>
+            <div class="history-list" id="historyList">
+              <!-- items додаються з JS -->
+            </div>
+
+            <div class="history-empty hidden" id="historyEmpty">
+              Ще немає збережених перевірок
+            </div>
           </div>
 
-          <!-- NOTE -->
+          <!-- ===== NOTE ===== -->
           <div class="card note-card">
             <h3>Нагадування</h3>
             <p class="muted">
@@ -165,8 +121,48 @@
       </div>
     </main>
 
+    <!-- ================= MODALS ================= -->
+
+    <!-- GUIDE -->
+    <div class="modal hidden" id="guideModal">
+      <div class="modal-content guide">
+        <h2>Перед початком</h2>
+        <ul class="guide-list">
+          <li>📸 Природне денне світло</li>
+          <li>🚫 Без спалаху та тіней</li>
+          <li>🔍 Родимка повністю в кадрі</li>
+          <li>📏 Відстань 10–15 см</li>
+        </ul>
+        <button class="btn-primary large" id="guideConfirm">Продовжити</button>
+      </div>
+    </div>
+
+    <!-- CROP -->
+    <div class="modal hidden" id="cropModal">
+      <div class="modal-content">
+        <h2 class="text-center">Обріжте фото (за бажанням)</h2>
+
+        <div class="crop-container">
+          <img id="cropImage" />
+        </div>
+
+        <div class="crop-controls">
+          <button id="zoomIn">+</button>
+          <button id="zoomOut">−</button>
+        </div>
+
+        <div class="crop-actions">
+          <button class="btn-secondary" id="skipCrop">Не обрізати</button>
+          <button class="btn-primary" id="confirmCrop">Підтвердити</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SCRIPTS ================= -->
+    <input type="file" id="imageInput" accept="image/*" hidden />
+
     <script src="{{ url_for('static', path='js/auth.js') }}"></script>
-    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+    <script src="{{ url_for('static', path='js/dashboard.js') }}"></script>
     <script src="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.js"></script>
   </body>
 </html>

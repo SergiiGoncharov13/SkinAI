@@ -1,10 +1,11 @@
 from pydantic import BaseModel
+from datetime import datetime
 
+class HistoryCreate(BaseModel):
+    prediction: str
+    probabilities: dict
+    tag: str | None = None
 
-class HistoryRead(BaseModel):
+class HistoryResponse(HistoryCreate):
     id: int
-    date_time: str
-    result: str
-
-    class Config:
-        from_attributes = True
+    created_at: datetime
