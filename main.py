@@ -34,6 +34,10 @@ def login(request: Request):
 def register(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
 
+@app.get("/dashboard")
+def register(request: Request):
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
 @app.post("/upload")
 async def upload_file(file: UploadFile):
     with open(f"uploaded_files/{file.filename}", "wb") as buffer:

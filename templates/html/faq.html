@@ -1,64 +1,257 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkinAI - FAQ</title>
-  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="logo"><a href="/">SkinAI</a></div>
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    </nav>
-  </header>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ — SkinAI</title>
 
-  <div class="page-content">
-    <section class="faq">
-      <h2>FAQ</h2>
-      <div class="accordion">
-        <div class="accordion-item">
-          <button class="accordion-header">What is SkinAI?</button>
-          <div class="accordion-body">SkinAI is an AI-powered tool for analyzing skin conditions.</div>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">SkinAI</div>
+        <nav class="nav">
+          <a href="/">На головну</a>
+          <a href="/login" class="btn-outline">Увійти</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ================= FAQ HERO ================= -->
+    <section class="section light">
+      <div class="container">
+        <h1>Поширені запитання</h1>
+        <p>Тут ви знайдете відповіді на найпоширеніші питання щодо роботи SkinAI, використання сервісу, безпеки даних та обмежень штучного інтелекту.</p>
+        <p class="safety-note">⚠️ SkinAI не є медичним діагностичним інструментом і не замінюєконсультацію лікаря.</p>
+      </div>
+    </section>
+
+    <!-- ================= FAQ CONTENT ================= -->
+    <section class="section">
+      <div class="container">
+        <!-- 🩺 MEDICAL -->
+        <h2>🩺 Медична відповідальність</h2>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Чи є SkinAI медичним сервісом?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Ні. SkinAI — це інформаційний сервіс попередньої оцінки ризику.
+                Він не встановлює медичних діагнозів і не може замінити
+                консультацію лікаря-дерматолога.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Чи можна вважати результат діагнозом?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Ні. Результати аналізу мають рекомендаційний характер і слугують
+                для підвищення обізнаності користувача щодо можливих змін шкіри.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Що робити, якщо результат викликає занепокоєння?
+            </button>
+            <div class="accordion-content">
+              <p>
+                У разі підвищеного ризику рекомендується звернутися до
+                кваліфікованого лікаря для професійної медичної оцінки.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="accordion-item">
-          <button class="accordion-header">Is this a medical diagnosis?</button>
-          <div class="accordion-body">No, this is not a diagnosis. Consult your doctor for medical advice.</div>
+
+        <!-- 🤖 AI -->
+        <h2>🤖 Робота штучного інтелекту</h2>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Як працює аналіз зображень у SkinAI?
+            </button>
+            <div class="accordion-content">
+              <p>
+                SkinAI використовує модель глибокого навчання, натреновану на
+                дерматоскопічних зображеннях, для аналізу візуальних ознак
+                родимок.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Які типи змін визначає система?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Система класифікує зображення за трьома категоріями: melanoma,
+                nevus, benign keratosis.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Чи може система помилятися?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Так. Як і будь-яка AI-модель, SkinAI має обмеження та може
+                помилятися, особливо за умови низької якості зображення.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="accordion-item">
-          <button class="accordion-header">How often should you use SkinAI?</button>
-          <div class="accordion-body">For best results, check your skin weekly or whenever you notice changes.</div>
+
+        <!-- 🔐 DATA -->
+        <h2>🔐 Дані та безпека</h2>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Чи зберігаються мої зображення?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Зображення зберігаються лише для відображення історії аналізів у
+                вашому обліковому записі.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Чи передаються дані третім сторонам?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Ні. Дані користувачів не передаються третім сторонам і
+                обробляються конфіденційно.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Чи можу я видалити свої дані?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Так. Користувач може видалити історію аналізів або обліковий
+                запис.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="accordion-item">
-          <button class="accordion-header">How to prepare for a dermatology appointment using SkinAI?</button>
-          <div class="accordion-body">Upload recent photos and notes from SkinAI to help your dermatologist understand your skin history.</div>
+
+        <!-- 📷 USAGE -->
+        <h2>📷 Використання сервісу</h2>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Яке фото найкраще підходить для аналізу?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Рекомендується чітке фото при природному освітленні, без
+                спалаху, з родимкою повністю в кадрі.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Які формати зображень підтримуються?
+            </button>
+            <div class="accordion-content">
+              <p>JPEG та PNG.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Скільки часу займає аналіз?
+            </button>
+            <div class="accordion-content">
+              <p>
+                Аналіз зазвичай займає кілька секунд після завантаження
+                зображення.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="accordion-item">
-          <button class="accordion-header">How to delete my account?</button>
-          <div class="accordion-body">You can request account deletion in your profile settings or contact support.</div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-header">How to save results?</button>
-          <div class="accordion-body">Results can be downloaded as PDF or saved within your account for future reference.</div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-header">Is my personal information safe?</button>
-          <div class="accordion-body">Yes, all data is encrypted and securely stored. We never share information without consent.</div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-header">Does SkinAI replace the Doctor?</button>
-          <div class="accordion-body">No, SkinAI provides insights and suggestions, but cannot replace professional medical advice.</div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-header">Who should use SkinAI?</button>
-          <div class="accordion-body">Anyone looking to monitor skin health or detect early issues can benefit from SkinAI.</div>
+
+        <!-- ⚠️ LIMITATIONS -->
+        <h2>⚠️ Обмеження</h2>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Чи можна використовувати SkinAI для самодіагностики?
+            </button>
+            <div class="accordion-content">
+              <p>Ні. SkinAI не призначений для самостійного встановлення медичних діагнозів.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              Чи підходить сервіс для дітей?
+            </button>
+            <div class="accordion-content">
+              <p>
+                SkinAI не має вікових обмежень, проте результати завжди мають
+                розглядатися разом із лікарем.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  </div>
-  <script src="{{ url_for('static', path='js/accordion.js') }}"></script>
-</body>
+
+    <!-- ================= CTA ================= -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Подбайте про своє здоров’я вже сьогодні</h2>
+          <p class="cta-note">Реєстрація займає менше хвилини</p>
+          <a href="/register" class="btn-primary large">Почати перевірку</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>© 2026 SkinAI. Усі права захищені.</p>
+        <div class="footer-links">
+          <a href="/">Головна</a>
+          <a href="#">Політика конфіденційності</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', path='js/accordion.js') }}"></script>
+  </body>
 </html>

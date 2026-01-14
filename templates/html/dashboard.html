@@ -1,46 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkinAI - Dashboard</title>
-  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="logo"><a href="/">SkinAI</a></div>
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/login" id="logoutBtn">Logout</a>
-    </nav>
-  </header>
-  <div class="page-content">
-    <main class="dashboard-main">
-      <section class="user-info">
-        <h2>User Information</h2>
-        <p>Email: <span id="userEmail"></span></p>
-      </section>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Мій кабінет | SkinAI</title>
 
-      <section class="scan-history">
-        <h2>Your Scan History</h2>
-        <ul id="scanList">
-          <li><span>Birthmark on left arm</span><span class="status-ok">OK</span></li>
-          <li><span>Birthmark on back</span><span class="status-alert">See Doctor</span></li>
-        </ul>
-      </section>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <script>
+      requireAuth();
+    </script>
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">SkinAI</div>
+        <nav class="nav">
+          <a href="/">На головну</a>
+          <a href="/faq">Як це працює</a>
+          <a onclick="logout()" id="logoutBtn" class="btn-outline">Вийти</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ================= DASHBOARD ================= -->
+    <main class="dashboard">
+      <div class="container dashboard-grid">
+        <!-- ===== LEFT COLUMN ===== -->
+        <section class="dashboard-main">
+          <!-- WELCOME -->
+          <div class="card welcome-card">
+            <h1>Вітаємо у SkinAI 👋</h1>
+            <p>
+              Тут ви можете виконати аналіз зображення, переглянути результати
+              та історію перевірок.
+            </p>
+          </div>
+
+          <!-- UPLOAD -->
+          <div class="card upload-card">
+            <div class="modal hidden" id="guideModal">
+              <div class="modal-content guide">
+                <h2>Перед початком</h2>
+                <p class="guide-subtitle">
+                  Дотримуйтесь цих рекомендацій, щоб отримати точніший результат
+                </p>
+
+                <ul class="guide-list">
+                  <li>📸 Зробіть фото при природному денному світлі</li>
+                  <li>🚫 Уникайте спалаху та тіней</li>
+                  <li>🔍 Родимка має бути повністю в кадрі</li>
+                  <li>📏 Відстань до шкіри — приблизно 10–15 см</li>
+                  <li>🎯 Фото повинно бути чітким і у фокусі</li>
+                </ul>
+
+                <div class="guide-note">
+                  SkinAI не встановлює медичних діагнозів і не замінює
+                  консультацію лікаря.
+                </div>
+                <button class="btn-primary large" id="guideConfirm">
+                  Зрозуміло
+                </button>
+              </div>
+            </div>
+
+            <section class="upload-section">
+              <h1>Почнемо</h1>
+              <p>Додайте фото родимки для аналізу</p>
+
+              <input type="file" id="imageInput" accept="image/*" hidden />
+
+              <button class="upload-btn" onclick="openFilePicker()">
+                📎 Завантажити фото
+              </button>
+
+              <div class="upload-tip">
+                ℹ️ Для кращого результату використовуйте природне освітлення
+              </div>
+            </section>
+
+            <div class="modal hidden" id="cropModal">
+              <div class="modal-content">
+                <h2 class="text-center">Обріжте фото</h2>
+
+                <div class="crop-container">
+                  <img id="cropImage" />
+                </div>
+
+                <div class="crop-controls">
+                  <button id="zoomIn">+</button>
+                  <button id="zoomOut">−</button>
+                </div>
+
+                <div class="text-center">
+                  <button class="btn-primary" id="confirmCrop">
+                    Підтвердити
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <p class="small-disclaimer">
+              Результат має інформаційний характер і не є медичним діагнозом.
+            </p>
+          </div>
+
+          <!-- LAST RESULT -->
+          <div class="card result-card">
+            <h2>Останній результат</h2>
+
+            <!-- MOCK RESULT -->
+            <div class="result-status warning">
+              <span class="badge">Підвищена увага</span>
+              <p>
+                Виявлені ознаки, які можуть потребувати консультації
+                дерматолога.
+              </p>
+            </div>
+
+            <div class="result-details">
+              <div><strong>Оцінка AI:</strong> можливий ризик</div>
+              <div><strong>Дата:</strong> 12.01.2026</div>
+            </div>
+
+            <button class="btn-secondary">Записатися до лікаря</button>
+          </div>
+        </section>
+
+        <!-- ===== RIGHT COLUMN ===== -->
+        <aside class="dashboard-side">
+          <!-- HISTORY -->
+          <div class="card history-card">
+            <h3>Історія перевірок</h3>
+
+            <ul class="history-list">
+              <li>
+                <span class="dot safe"></span>
+                05.01.2026 — без ризику
+              </li>
+              <li>
+                <span class="dot warning"></span>
+                12.01.2026 — рекомендовано огляд
+              </li>
+            </ul>
+          </div>
+
+          <!-- NOTE -->
+          <div class="card note-card">
+            <h3>Нагадування</h3>
+            <p class="muted">
+              Регулярне спостереження допомагає виявити зміни на ранньому етапі.
+            </p>
+          </div>
+        </aside>
+      </div>
     </main>
-  </div>
 
-  <script src="{{ url_for('static', path='js/auth.js') }}"></script>
-  <script src="{{ url_for('static', path='js/main.js') }}"></script>
-  <script>
-    const logout = document.getElementById('logoutBtn');
-    if (logout) {
-      logout.addEventListener('click', function (e) {
-        localStorage.removeItem('loggedInUser');
-
-      });
-    }
-  </script>
-</body>
+    <script src="{{ url_for('static', path='js/auth.js') }}"></script>
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+    <script src="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.js"></script>
+  </body>
 </html>

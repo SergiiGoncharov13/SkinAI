@@ -1,37 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkinAI - Login</title>
-  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="logo"><a href="/">SkinAI</a></div>
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/faq">FAQ</a>
-      <a href="/register">Register</a>
-    </nav>
-  </header>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вхід | SkinAI</title>
 
-  <div class="page-content">
-    <main class="auth-page">
-      <div class="auth-box">
-        <h1>Login</h1>
-        <form id="loginForm">
-          <label for="email">Email</label>
-          <input id="email" type="email" required placeholder="you@example.com" />
-          <label for="password">Password</label>
-          <input id="password" type="password" required placeholder="Your password" />
-          <button type="submit">Login</button>
-        </form>
-        <p class="switch-msg">Don't have an account? <a href="/register">Register</a></p>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="auth-page">
+    <!-- HEADER -->
+    <header class="header transparent">
+      <div class="container header-inner">
+        <div class="logo">SkinAI</div>
+        <nav class="nav">
+          <a href="/">На головну</a>
+          <a href="/faq">Як це працює</a>
+        </nav>
       </div>
-    </main>
-  </div>
+    </header>
 
-  <script src="{{ url_for('static', path='js/auth.js') }}"></script>
-</body>
+    <!-- LOGIN SECTION -->
+    <section class="auth-section">
+      <div class="auth-container">
+        <!-- LEFT INFO -->
+        <div class="auth-info">
+          <h2>Ласкаво просимо до SkinAI</h2>
+          <p>
+            Увійдіть, щоб переглянути історію перевірок та продовжити аналіз
+            змін шкіри.
+          </p>
+
+          <ul class="auth-benefits">
+            <li>🔒 Захищене зберігання результатів</li>
+            <li>📊 Історія перевірок</li>
+            <li>🧠 AI-аналіз без медичних діагнозів</li>
+          </ul>
+
+          <p class="auth-disclaimer">
+            SkinAI не є медичним сервісом і не замінює консультацію лікаря.
+          </p>
+        </div>
+
+        <!-- FORM -->
+        <div class="auth-card">
+          <h1>Вхід до облікового запису</h1>
+
+          <form id="login-form">
+            <div class="form-group">
+              <label for="email">Електронна пошта</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="example@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Пароль</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Введіть пароль"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn-primary full">Увійти</button>
+          </form>
+
+          <p class="auth-footer">
+            Ще не маєте облікового запису?
+            <a href="/register">Зареєструватися</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script src="{{ url_for('static', path='js/auth.js') }}"></script>
+  </body>
 </html>

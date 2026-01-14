@@ -1,67 +1,277 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkinAI - Home</title>
-  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="logo"><a href="/">SkinAI</a></div>
-    <nav class="nav-links">
-      <a href="/faq">FAQ</a>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    </nav>
-  </header>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkinAI — попередня оцінка ризику змін шкіри</title>
 
-  <div class="page-content">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">SkinAI</div>
+        <nav class="nav">
+          <a href="#how">Як це працює</a>
+          <a href="#faq">FAQ</a>
+          <a href="/login" class="btn-outline">Увійти</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ================= HERO ================= -->
     <section class="hero">
-      <img src="{{ url_for('static', path='assets/images/hero.jpeg') }}" alt="SkinAI hero" class="hero-img" />
-      <h1>AI-Powered Skin Analysis</h1>
-      <p>Upload a photo and get instant skin health insights.</p>
-      <button class="cta-btn" id="trySkinAI">Try SkinAI</button>
-    </section>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <span class="hero-eyebrow"
+            >AI-сервіс попередньої оцінки змін шкіри</span
+          >
 
-    <section class="steps">
-      <h2>Check your skin!</h2>
-      <div class="step-grid">
-        <div class="step-item"><p>Step 1: Take a photo</p><img src="{{ url_for('static', path='assets/images/steps/step1.png') }}" alt=""></div>
-        <div class="step-item"><p>Step 2: AI analyzes</p><img src="{{ url_for('static', path='assets/images/steps/step2.png') }}" alt=""></div>
-        <div class="step-item"><p>Step 3: PDF report</p><img src="{{ url_for('static', path='assets/images/steps/step3.png') }}" alt=""></div>
-        <div class="step-item"><p>Step 4: Expert tips</p><img src="{{ url_for('static', path='assets/images/steps/step4.png') }}" alt=""></div>
-      </div>
-      <button class="cta-btn get-instant-btn" id="getInstantResult">Get Instant Result</button>
-    </section>
+          <h1>Раннє виявлення змін шкіри може врятувати життя</h1>
 
-    <section class="why">
-      <h2>Why SkinAI?</h2>
-      <div class="icons-grid">
-        <div class="item"><img src="{{ url_for('static', path='assets/images/usage/shield.jpeg') }}" alt=""><p><strong>Safe & Secure</strong><br/>Data is encrypted and private.</p></div>
-        <div class="item"><img src="{{ url_for('static', path='assets/images/usage/clock.jpeg') }}" alt=""><p><strong>Fast</strong><br/>Instant analysis without appointments.</p></div>
-        <div class="item"><img src="{{ url_for('static', path='assets/images/usage/accuracy.jpeg') }}" alt=""><p><strong>Accurate</strong><br/>Dermatology-trained models.</p></div>
-        <div class="item"><img src="{{ url_for('static', path='assets/images/usage/leaf.jpeg') }}" alt=""><p><strong>Eco-friendly</strong><br/>Fewer unnecessary clinic visits.</p></div>
-      </div>
-    </section>
+          <p class="hero-subtitle">
+            SkinAI — це сервіс попередньої оцінки ризику, який аналізує
+            фотографію родимки за допомогою штучного інтелекту та підказує, чи
+            варто звернутися до лікаря.
+          </p>
 
-    <section class="ai-analysis">
-      <h2>How AI analyzes your skin</h2>
-      <div class="ai-grid">
-        <div class="ai-step"><img src="{{ url_for('static', path='assets/images/ai/step1.jpeg') }}" alt=""><p>Image scanning and pre-processing</p></div>
-        <div class="ai-step"><img src="{{ url_for('static', path='assets/images/ai/step2.jpeg') }}" alt=""><p>Model analysis for patterns & features</p></div>
-        <div class="ai-step"><img src="{{ url_for('static', path='assets/images/ai/step3.png') }}" alt=""><p>Report generation with recommendations</p></div>
+          <p class="hero-disclaimer">
+            SkinAI не є медичним діагностичним інструментом і не замінює
+            консультацію лікаря.
+          </p>
+
+          <div class="hero-actions">
+            <a href="/register" class="btn-primary">Почати перевірку</a>
+            <a href="#how" class="btn-secondary">Як це працює</a>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <img src="{{ url_for('static', path='assets/hero_ai_skin.png') }}" 
+          alt="AI skin analysis illustration"/>
+        </div>
       </div>
     </section>
 
-    <section class="reviews">
-      <h2>Reviews</h2>
-      <div class="review-item"><img src="{{ url_for('static', path='assets/images/reviews/review1.jpeg') }}" alt=""><p>"Amazing AI analysis!"</p></div>
-      <div class="review-item"><img src="{{ url_for('static', path='assets/images/reviews/review2.jpeg') }}" alt=""><p>"Quick and accurate."</p></div>
-    </section>
-  </div>
+    <!-- ================= WHY IMPORTANT ================= -->
+    <section class="section light">
+      <div class="container">
+        <h2>Чому раннє виявлення має значення</h2>
 
-  <script src="{{ url_for('static', path='js/accordion.js') }}"></script>
-  <script src="{{ url_for('static', path='js/main.js') }}"></script>  
-</body>
+        <p>
+          Меланома та інші онкологічні захворювання шкіри часто розвиваються
+          непомітно. На ранніх етапах зміни можуть здаватися незначними, проте
+          саме в цей період лікування є найбільш ефективним.
+        </p>
+
+        <p>
+          SkinAI створено як допоміжний інструмент, який допомагає звернути
+          увагу на потенційно небезпечні зміни та прийняти зважене рішення щодо
+          подальших дій.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="section" id="how">
+      <div class="container">
+        <h2>Як працює SkinAI</h2>
+
+        <div class="steps">
+          <div class="step-card">
+            <img src="{{ url_for('static', path='assets/step1_capture.jpg') }}" 
+            alt="Зйомка родимки"/>
+            <span class="step-number">1</span>
+            <h3>Зробіть фото родимки</h3>
+            <p>
+              Зробіть чітке фото у хорошому освітленні. Переконайтесь, що
+              родимка повністю в кадрі.
+            </p>
+            <small>
+              Порада: використовуйте природне світло та уникайте спалаху.
+            </small>
+          </div>
+          <div class="step-card">
+            <img src="{{ url_for('static', path='assets/step2_capture.jpg') }}" 
+            alt="Завантаження зображення"/>
+            <span class="step-number">2</span>
+            <h3>Завантажте зображення</h3>
+            <p>
+              Увійдіть до свого облікового запису та завантажте фото.
+              Рекомендовані формати — JPEG або PNG.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <img src="{{ url_for('static', path='assets/step3_capture.jpg') }}" 
+            alt="Аналіз зображення"/>
+            <span class="step-number">3</span>
+            <h3>Отримайте оцінку ризику</h3>
+            <p>
+              Алгоритм штучного інтелекту аналізує зображення та надає попередню
+              оцінку протягом кількох секунд.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PHOTO GUIDE ================= -->
+    <section class="section light">
+      <div class="container">
+        <h2>Як правильно зробити фото</h2>
+
+        <div class="photo-guide">
+          <div class="photo-tip">
+            <span>☀️</span>
+            <p>Використовуйте природне денне світло</p>
+          </div>
+          <div class="photo-tip">
+            <span>🚫⚡</span>
+            <p>Уникайте спалаху та різких тіней</p>
+          </div>
+          <div class="photo-tip">
+            <span>📐</span>
+            <p>Родимка повинна бути повністю в кадрі</p>
+          </div>
+          <div class="photo-tip">
+            <span>🔍</span>
+            <p>Зробіть фото з близької відстані</p>
+          </div>
+          <div class="photo-tip">
+            <span>🎯</span>
+            <p>Переконайтесь, що зображення у фокусі</p>
+          </div>
+        </div>
+
+        <p class="tip">
+          Порада: тримайте смартфон на відстані приблизно 10–15 см для кращої
+          деталізації.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= WHAT YOU GET ================= -->
+    <section class="section">
+      <section class="container benefits">
+        <h2>Що ви отримаєте</h2>
+
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <img src="{{ url_for('static', path='assets/benefit-risk.jpg') }}" 
+            alt="AI risk assessment"/>
+            <h3>Попередню AI-оцінку ризику</h3>
+            <p>
+              SkinAI аналізує зображення родимки та допомагає зрозуміти, чи може
+              вона потребувати додаткової уваги спеціаліста.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <img src="{{ url_for('static', path='assets/benefit-clear.jpg') }}" 
+            alt="Clear results"/>
+            <h3>Зрозумілий і прозорий результат</h3>
+            <p>
+              Результати подаються у простій формі — без складних термінів та
+              незрозумілих медичних формулювань.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <img src="{{ url_for('static', path='assets/benefit-guidance.png') }}" 
+            alt="Next steps guidance"/>
+            <h3>Рекомендацію щодо подальших дій</h3>
+            <p>
+              SkinAI підказує, чи варто звернутися до лікаря або продовжити
+              спостереження.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <img src="{{ url_for('static', path='assets/benefit-history.png') }}" 
+            alt="Analysis history"/>
+            <h3>Історію ваших перевірок</h3>
+            <p>
+              Усі результати зберігаються у вашому кабінеті для зручного
+              відстеження змін з часом.
+            </p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ================= SAFETY ================= -->
+    <section class="section light">
+      <div class="container">
+        <h2>Безпека та відповідальність</h2>
+        <p class="safety-note">
+          ⚠️ SkinAI не є медичним діагностичним інструментом
+        </p>
+        <p>
+          SkinAI не встановлює медичних діагнозів і не може замінити
+          консультацію лікаря. Результати аналізу мають інформаційний характер і
+          слугують для підвищення обізнаності користувача.
+        </p>
+
+        <p>
+          Завантажені зображення обробляються конфіденційно та не передаються
+          третім сторонам.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Подбайте про своє здоров’я вже сьогодні</h2>
+          <p class="cta-note">Реєстрація займає менше хвилини</p>
+          <a href="/register" class="btn-primary large">Почати перевірку</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ PREVIEW ================= -->
+    <section class="section" id="faq">
+      <div class="container">
+        <h2>Поширені запитання</h2>
+
+        <div class="faq-preview">
+          <p>
+            <strong>Чи є SkinAI медичним сервісом?</strong><br />
+            Ні. SkinAI — це інформаційний інструмент попередньої оцінки.
+          </p>
+
+          <p>
+            <strong>Чи зберігаються мої дані?</strong><br />
+            Дані зберігаються лише для відображення історії аналізів.
+          </p>
+
+          <a href="/faq" class="link">Переглянути всі запитання →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>© 2026 SkinAI. Усі права захищені.</p>
+        <div class="footer-links">
+          <a href="/faq">FAQ</a>
+          <a href="#">Політика конфіденційності</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>  
+  </body>
 </html>

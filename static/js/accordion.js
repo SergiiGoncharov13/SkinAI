@@ -1,20 +1,19 @@
-// accordion.js - simple, robust accordion
-document.addEventListener('click', function (e) {
-    if (!e.target.matches('.accordion-header')) return;
-  
-    const header = e.target;
-    const body = header.nextElementSibling;
-    if (!body) return;
-  
-    // close other open bodies within same .accordion container
-    const container = header.closest('.accordion');
-    if (container) {
-      container.querySelectorAll('.accordion-body').forEach(b => {
-        if (b !== body) b.style.display = 'none';
-      });
-    }
-  
-    // toggle current
-    body.style.display = (body.style.display === 'block') ? 'none' : 'block';
+document.addEventListener("DOMContentLoaded", () => {
+  const items = document.querySelectorAll(".accordion-item");
+
+  items.forEach((item) => {
+    const header = item.querySelector(".accordion-header");
+
+    header.addEventListener("click", () => {
+      const isOpen = item.classList.contains("active");
+
+      // Close all items
+      items.forEach((i) => i.classList.remove("active"));
+
+      // Open curent item
+      if (!isOpen) {
+        item.classList.add("active");
+      }
+    });
   });
-  
+});

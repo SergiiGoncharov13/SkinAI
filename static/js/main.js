@@ -1,76 +1,61 @@
-const tryBtn = document.getElementById('trySkinAI');
-const instantBtn = document.getElementById('getInstantResult');
+let cropper;
+const imageInput = document.getElementById("imageInput");
+const cropModal = document.getElementById("cropModal");
+const cropImage = document.getElementById("cropImage");
 
-[tryBtn, instantBtn].forEach(btn => {
-  if (btn) btn.addEventListener('click', openUploadPopup);
+function openFilePicker() {
+  document.getElementById("guideModal").classList.remove("hidden");
+}
+
+document.getElementById("guideConfirm").onclick = () => {
+  document.getElementById("guideModal").classList.add("hidden");
+  imageInput.click();
+};
+
+
+imageInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    cropImage.src = reader.result;
+    cropModal.classList.remove("hidden");
+
+    if (cropper) {
+      cropper.destroy();
+    }
+
+    cropper = new Cropper(cropImage, {
+      aspectRatio: 1,
+      viewMode: 1,
+      autoCropArea: 0.8,
+      background: false,
+    });
+  };
+
+  reader.readAsDataURL(file);
 });
 
-function openUploadPopup() {
-  // Don't open multiple popups
-  if (document.getElementById('uploadPopup')) return;
+document.getElementById("zoomIn").onclick = () => {
+  cropper.zoom(0.1);
+};
 
-  const popup = document.createElement('div');
-  popup.id = 'uploadPopup';
-  popup.className = 'popup-overlay';
+document.getElementById("zoomOut").onclick = () => {
+  cropper.zoom(-0.1);
+};
 
-  popup.innerHTML = `
-    <div class="popup-content" role="dialog" aria-modal="true">
-      <h2>Upload Your Photo</h2>
-
-      <div id="loader" class="loader" style="display:none;">
-        <div class="spinner" aria-hidden="true"></div>
-        <p id="loaderText">Uploading your image...</p>
-      </div>
-
-      <div id="resultMock" class="result-mock" style="display:none;">
-        <h3>Skin Analysis Result</h3>
-        <ul>
-          <li><strong>Detected Birthmarks:</strong> 2 detected</li>
-          <li><strong>Status:</strong> Most appear normal; one requires dermatologist check</li>
-          <li><strong>Recommendation:</strong> Keep photo history and consult your doctor if changes occur</li>
-        </ul>
-      </div>
-
-      <div class="popup-buttons">
-        <label for="fileInput" class="custom-file-btn" id="chooseFileLabel">Choose File</label>
-        <button id="closePopup" class="close-btn" type="button">Cancel</button>
-      </div>
-
-      <input type="file" id="fileInput" accept="image/*" />
-    </div>
-  `;
-
-  document.body.appendChild(popup);
-
-  const fileInput = document.getElementById('fileInput');
-  const loader = document.getElementById('loader');
-  const loaderText = document.getElementById('loaderText');
-  const resultMock = document.getElementById('resultMock');
-  const closeBtn = document.getElementById('closePopup');
-
-  // Start process when file selected
-  fileInput.addEventListener('change', () => {
-    if (!fileInput.files || !fileInput.files.length) return;
-
-    loader.style.display = 'block';
-    resultMock.style.display = 'none';
-    loaderText.textContent = 'Uploading your image...';
-
-    // Simulated pipeline (replace with real API calls)
-    setTimeout(() => {
-      loaderText.textContent = 'Analyzing your image...';
-      setTimeout(() => {
-        loaderText.textContent = 'Preparing results for you...';
-        setTimeout(() => {
-          loader.style.display = 'none';
-          resultMock.style.display = 'block';
-        }, 1400);
-      }, 1600);
-    }, 900);
+document.getElementById("confirmCrop").onclick = () => {
+  const canvas = cropper.getCroppedCanvas({
+    width: 224,
+    height: 224,
   });
 
-  closeBtn.addEventListener('click', () => {
-    const el = document.getElementById('uploadPopup');
-    if (el) el.remove();
-  });
-}
+  const croppedImage = canvas.toDataURL("image/jpeg");
+
+  console.log("READY FOR AI:", croppedImage);
+
+  cropModal.classList.add("hidden");
+
+  // send a picture to backend
+};

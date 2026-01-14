@@ -1,43 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkinAI - Register</title>
-  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="logo"><a href="/">SkinAI</a></div>
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/faq">FAQ</a>
-      <a href="/login">Login</a>
-    </nav>
-  </header>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Реєстрація | SkinAI</title>
 
-  <div class="page-content">
-    <main class="auth-page">
-      <div class="auth-box">
-        <h1>Register</h1>
-        <form id="registerForm" action="/signup" method="post">
-          <label for="firstName">First Name</label>
-          <input id="firstName" type="text" required />
-          <label for="lastName">Last Name</label>
-          <input id="lastName" type="text" required />
-          <label for="age">Age</label>
-          <input id="age" type="number" required />
-          <label for="regEmail">Email</label>
-          <input id="regEmail" type="email" required />
-          <label for="regPassword">Password</label>
-          <input id="regPassword" type="password" required />
-          <button type="submit">Register</button>
-        </form>
-        <p class="switch-msg">Already have an account? <a href="/login">Login</a></p>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="auth-page">
+    <!-- HEADER -->
+    <header class="header transparent">
+      <div class="container header-inner">
+        <div class="logo">SkinAI</div>
+        <nav class="nav">
+          <a href="/">На головну</a>
+          <a href="/login" class="btn-outline">Увійти</a>
+        </nav>
       </div>
-    </main>
-  </div>
+    </header>
 
-  <script src="{{ url_for('static', path='js/auth.js') }}"></script>
-</body>
+    <!-- REGISTER SECTION -->
+    <section class="auth-section">
+      <div class="auth-container">
+        <!-- LEFT INFO -->
+        <div class="auth-info">
+          <h2>Створіть обліковий запис</h2>
+          <p>
+            Реєстрація дозволяє зберігати результати аналізу, відстежувати зміни
+            з часом та отримувати рекомендації.
+          </p>
+
+          <ul class="auth-benefits">
+            <li>📂 Збереження історії перевірок</li>
+            <li>🔔 Нагадування про повторну перевірку</li>
+            <li>🔒 Захист персональних даних</li>
+          </ul>
+
+          <p class="auth-disclaimer">
+            SkinAI надає інформаційну оцінку та не є медичним сервісом.
+          </p>
+        </div>
+
+        <!-- FORM -->
+        <div class="auth-card">
+          <h1>Реєстрація</h1>
+
+          <form id="registerForm">
+            <div class="form-group">
+              <label for="email">Електронна пошта</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="example@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Пароль</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Мінімум 6 символів"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Підтвердіть пароль</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Повторіть пароль"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn-primary full">
+              Створити обліковий запис
+            </button>
+          </form>
+
+          <p class="auth-footer">
+            Уже маєте обліковий запис?
+            <a href="/login">Увійти</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script src="{{ url_for('static', path='js/auth.js') }}"></script>
+  </body>
 </html>
