@@ -1,22 +1,32 @@
+import json
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
-from create_db import get_db
 from models.history import History
-from schemas.history_schema import HistoryCreate, HistoryResponse
+from create_db import get_db
+from services.system_user import get_system_user
 
-router = APIRouter(prefix="/history", tags=["History"])
+router = APIRouter()
 
 
-@router.get("/", response_model=list[HistoryResponse])
+@router.get("/history")
 def get_history(db: Session = Depends(get_db)):
-    return db.query(History).order_by(History.created_at.desc()).all()
+    user = get_system_user()
+
+    records = (
+        db.query(History)
+        .filter(History.user_id == user.id)
+        .order_by(History.created_at.desc())
+        .all()
+    )
+
+    return [serialize_history(r) for r in records]
 
 
-@router.post("/", response_model=HistoryResponse)
-def create_history(data: HistoryCreate, db: Session = Depends(get_db)):
-    item = History(**data.dict())
-    db.add(item)
-    db.commit()
-    db.refresh(item)
-    return item
+def serialize_history(record):
+    return {
+        "id": record.id,
+        "prediction": record.prediction,
+        "probabilities": json.loads(record.probabilities),
+        "tag": record.tag,
+        "created_at": record.created_at
+    }

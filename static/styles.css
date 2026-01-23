@@ -901,23 +901,6 @@ body {
   }
 }
 
-/* ================= AI LOADING ================= */
-
-.spinner {
-  width: 36px;
-  height: 36px;
-  border: 4px solid #e5e7eb;
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 0.9s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* ================= RESULT ANIMATION ================= */
 .result-card {
   opacity: 1;
@@ -1052,4 +1035,135 @@ body {
 .result-card.result-show {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ================= APPOINTMENT ================= */
+.result-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.result-actions .btn-primary {
+  padding: 12px 24px;
+  font-weight: 600;
+}
+
+.modal-content.large {
+  max-width: 520px;
+  width: 100%;
+}
+
+.modal-content h2 {
+  margin-bottom: 16px;
+}
+
+.modal .form-group {
+  margin-bottom: 14px;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.modal select,
+.modal input[type="datetime-local"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.modal select:focus,
+.modal input:focus {
+  outline: none;
+  border-color: #5b7cfa;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.modal-actions .btn-primary,
+.modal-actions .btn-secondary {
+  flex: 1;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #22c55e;
+  color: #ffffff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+}
+
+.appointments-card {
+  margin-top: 20px;
+}
+
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.appointment-item {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.appointment-item strong {
+  display: block;
+  font-weight: 600;
+}
+
+.appointment-item span {
+  display: block;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.modal {
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  animation: fadeInUp 0.25s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
 }

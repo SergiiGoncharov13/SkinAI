@@ -30,6 +30,18 @@ const historyListEl = document.getElementById("historyList");
 const historyEmptyEl = document.getElementById("historyEmpty");
 const historyCountEl = document.getElementById("historyCount");
 
+// Appointment DOM
+const appointmentModal = document.getElementById("appointmentModal");
+const appointmentDate = document.getElementById("appointmentDate");
+const timeSelect = document.getElementById("appointmentTime");
+const cancelAppointment = document.getElementById("cancelAppointment");
+const confirmAppointment = document.getElementById("confirmAppointment");
+const appointmentSpinner = document.getElementById("appointmentSpinner");
+const branchSelect = document.getElementById("branchSelect");
+const clinicSelect = document.getElementById("clinicSelect");
+const citySelect = document.getElementById("citySelect");
+const doctorSelect = document.getElementById("doctorSelect");
+
 // ================== HELPERS ==================
 function safeEl(el) {
   return el !== null && typeof el !== "undefined";
@@ -172,12 +184,12 @@ async function analyzeImage(file) {
 
     renderResult(data.result);
 
+    const openAppointmentBtn = document.getElementById("openAppointmentBtn");
+    openAppointmentBtn?.addEventListener("click", () => {
+      showElement(appointmentModal);
+    });
+
     try {
-      await saveHistory({
-        prediction: data.result.prediction,
-        probabilities: data.result.probabilities,
-        tag: tagVal || null,
-      });
       await getHistory();
     } catch (err) {
       console.warn("Failed to save history:", err);
@@ -210,6 +222,203 @@ function renderResult(result) {
   resultBlock.classList.add("result-show");
 }
 
+// ================== CREATE AN APPOINTMENT ==================
+appointmentDate?.addEventListener("change", () => {
+  timeSelect.value = "";
+});
+
+if (appointmentDate) {
+  const today = new Date();
+  appointmentDate.min = today.toISOString().split("T")[0];
+}
+
+function generateTimeSlots() {
+  timeSelect.innerHTML = '<option value="">— Оберіть час —</option>';
+
+  for (let hour = 9; hour <= 18; hour++) {
+    ["00", "30"].forEach((min) => {
+      const time = `${String(hour).padStart(2, "0")}:${min}`;
+      const option = document.createElement("option");
+      option.value = time;
+      option.innerText = time;
+      timeSelect.appendChild(option);
+    });
+  }
+}
+
+const clinicBranches = {
+  Добробут: ["вул. Сімʼї Ідзиковських, 3 (Київ)", "пр-т Перемоги, 49 (Київ)"],
+  "Oxford Medical": ["вул. Павлівська, 26 (Київ)", "вул. Наукова, 7 (Львів)"],
+  "Into-Sana": ["Французький б-р, 42 (Одеса)", "вул. Варненська, 2 (Одеса)"],
+};
+
+clinicSelect?.addEventListener("change", () => {
+  const clinic = clinicSelect.value;
+
+  branchSelect.innerHTML = '<option value="">— Оберіть філіал —</option>';
+
+  if (!clinicBranches[clinic]) {
+    branchSelect.disabled = true;
+    return;
+  }
+
+  clinicBranches[clinic].forEach((branch) => {
+    const option = document.createElement("option");
+    option.value = branch;
+    option.innerText = branch;
+    branchSelect.appendChild(option);
+  });
+
+  branchSelect.disabled = false;
+});
+
+cancelAppointment?.addEventListener("click", () => {
+  hideElement(appointmentModal);
+});
+
+confirmAppointment?.addEventListener("click", (e) => {
+  e.preventDefault();
+  clearErrors();
+
+  let isValid = true;
+
+  if (!citySelect.value) {
+    setError(citySelect, "Оберіть місто");
+    isValid = false;
+  }
+
+  if (!clinicSelect.value) {
+    setError(clinicSelect, "Оберіть клініку");
+    isValid = false;
+  }
+
+  if (!branchSelect.value) {
+    setError(branchSelect, "Оберіть філіал");
+    isValid = false;
+  }
+
+  if (!appointmentDate.value) {
+    setError(appointmentDate, "Оберіть дату та час");
+    isValid = false;
+  }
+
+  if (!timeSelect.value) {
+    setError(timeSelect, "Оберіть час прийому");
+    isValid = false;
+  }
+
+  if (!doctorSelect.value) {
+    setError(doctorSelect, "Оберіть спеціаліста");
+    isValid = false;
+  }
+
+  if (!isValid) return;
+
+  setTimeout(async () => {
+    hideElement(appointmentModal);
+
+    showToast("Ваш запис успішно створено");
+
+    const fullDateTime = `${appointmentDate.value}T${timeSelect.value}`;
+
+    try {
+      await fetch("/api/doctor-visits", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          visit_date: appointmentDate.value,
+          notes: `${clinicSelect.value} / ${branchSelect.value} / ${doctorSelect.value}`,
+        }),
+      });
+    } catch (err) {
+      console.warn("Failed to save doctor visit:", err);
+    }
+
+    addAppointmentToHistory({
+      date: fullDateTime,
+      doctor: doctorSelect.value,
+      clinic: clinicSelect.value,
+      branch: branchSelect.value,
+    });
+  }, 1000);
+});
+
+function showToast(message) {
+  const toast = document.getElementById("toastSuccess");
+  toast.innerText = message;
+  toast.classList.remove("hidden");
+
+  setTimeout(() => {
+    toast.classList.add("hidden");
+  }, 3000);
+}
+
+function addAppointmentToHistory({ date, doctor, clinic, branch }) {
+  const list = document.getElementById("appointmentsList");
+
+  const empty = list.querySelector(".muted");
+  if (empty) empty.remove();
+
+  const item = document.createElement("div");
+  item.className = "appointment-item";
+
+  item.innerHTML = `
+    <strong>${doctor}</strong>
+    <span>${clinic}</span>
+    <span>${branch}</span>
+    <span>${new Date(date).toLocaleString("uk-UA")}</span>
+  `;
+
+  list.appendChild(item);
+  clearAppointmentFields();
+}
+
+function clearAppointmentFields() {
+  appointmentDate.value = "";
+  timeSelect.value = "";
+  citySelect.value = "";
+  clinicSelect.value = "";
+  branchSelect.innerHTML = '<option value="">— Оберіть філіал —</option>';
+  branchSelect.disabled = true;
+  doctorSelect.value = "";
+}
+
+async function getDoctorVisits() {
+  try {
+    const res = await fetch("/api/doctor-visits");
+    if (!res.ok) throw new Error("Failed to fetch visits");
+    const visits = await res.json();
+    renderDoctorVisits(visits);
+  } catch (err) {
+    console.warn("doctor visits error:", err);
+  }
+}
+
+function renderDoctorVisits(visits = []) {
+  const list = document.getElementById("appointmentsList");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  if (!visits.length) {
+    list.innerHTML = `<span class="muted">Записів ще немає</span>`;
+    return;
+  }
+
+  visits.forEach((v) => {
+    const item = document.createElement("div");
+    item.className = "appointment-item";
+
+    item.innerHTML = `
+      <strong>Візит до лікаря</strong>
+      <span>${new Date(v.visit_date).toLocaleString("uk-UA")}</span>
+      <span>${v.notes || ""}</span>
+    `;
+
+    list.appendChild(item);
+  });
+}
+
 // ================== UI HELPERS ==================
 function showLoading() {
   if (!resultBlock) return;
@@ -232,6 +441,24 @@ function showError(message = "Сталася помилка") {
   hideElement(loadingBlock);
   showElement(contentBlock);
   if (textEl) textEl.innerText = message;
+}
+
+function clearErrors() {
+  document
+    .querySelectorAll(".input-error")
+    .forEach((el) => el.classList.remove("input-error"));
+
+  document.querySelectorAll(".error-text").forEach((el) => el.remove());
+}
+
+function setError(input, message) {
+  input.classList.add("input-error");
+
+  const error = document.createElement("div");
+  error.className = "error-text";
+  error.innerText = message;
+
+  input.parentElement.appendChild(error);
 }
 
 // ================== TRANSLATION ==================
@@ -349,11 +576,25 @@ document.addEventListener("DOMContentLoaded", () => {
   hideElement(cropModal);
   hideElement(guideModal);
 
-  // pre-clear input
   if (imageTagEl) imageTagEl.value = "";
 
-  // load history
   getHistory();
+  generateTimeSlots();
+  getDoctorVisits();
+
+  // ===== UX: remove error on change =====
+  [
+    citySelect,
+    clinicSelect,
+    branchSelect,
+    appointmentDate,
+    doctorSelect,
+  ].forEach((el) => {
+    el?.addEventListener("change", () => {
+      el.classList.remove("input-error");
+      el.parentElement.querySelector(".error-text")?.remove();
+    });
+  });
 });
 
 document.getElementById("cancelUpload")?.addEventListener("click", () => {

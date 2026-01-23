@@ -88,6 +88,11 @@
               <span class="badge" id="aiBadge"></span>
               <p id="aiText"></p>
               <ul id="aiProbs"></ul>
+              <div class="result-actions">
+                <button class="btn-primary" id="openAppointmentBtn">
+                  Записатися до лікаря
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -107,6 +112,13 @@
 
             <div class="history-empty hidden" id="historyEmpty">
               Ще немає збережених перевірок
+            </div>
+          </div>
+          <!-- ===== APPOINTMENT ===== -->
+          <div class="card appointments-card">
+            <h3 class="text-center">Мої записи</h3>
+            <div id="appointmentsList" class="appointments-list">
+              <p class="muted">Поки немає записів</p>
             </div>
           </div>
 
@@ -158,6 +170,85 @@
       </div>
     </div>
 
+    <div class="modal hidden" id="appointmentModal">
+      <div class="modal-content large">
+        <h2>Записатись до лікаря</h2>
+
+        <div class="form-group">
+          <label>Оберіть місто</label>
+          <select id="citySelect">
+            <option value="">— Оберіть місто —</option>
+            <option>Київ</option>
+            <option>Львів</option>
+            <option>Харків</option>
+            <option>Дніпро</option>
+            <option>Одеса</option>
+            <option>Вінниця</option>
+            <option>Івано-Франківськ</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Оберіть клініку</label>
+          <select id="clinicSelect">
+            <option value="">— Оберіть клініку —</option>
+            <option>Into-Sana</option>
+            <option>Добробут</option>
+            <option>Медіком</option>
+            <option>Oxford Medical</option>
+            <option>ISIDA</option>
+            <option>Viva</option>
+            <option>Євроклініка</option>
+            <option>Smart Medical</option>
+            <option>Verum</option>
+            <option>On Clinic</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Оберіть філіал</label>
+          <select id="branchSelect" disabled>
+            <option value="">— Оберіть філіал —</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Оберіть дату</label>
+          <input type="date" id="appointmentDate" />
+        </div>
+        
+        <div class="form-group">
+          <label>Оберіть час</label>
+          <select id="appointmentTime">
+            <option value="">— Оберіть час —</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Оберіть спеціаліста</label>
+          <select id="doctorSelect">
+            <option value="">— Оберіть спеціаліста —</option>
+            <option>Олена Ковальчук — дерматолог, 12 років</option>
+            <option>Андрій Мельник — дерматолог, 9 років</option>
+            <option>Ірина Бондар — онкодерматолог, 15 років</option>
+            <option>Оксана Шевченко — дерматолог, 8 років</option>
+            <option>Максим Романюк — дерматолог, 11 років</option>
+          </select>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelAppointment">
+            Скасувати
+          </button>
+          <button class="btn-primary" id="confirmAppointment"type="button">
+          Записатися
+        </button>
+
+       <!-- <div class="spinner hidden" id="appointmentSpinner"></div> -->
+      </div>
+    </div>
+
+    <div class="toast hidden" id="toastSuccess"></div>
     <!-- ================= SCRIPTS ================= -->
     <input type="file" id="imageInput" accept="image/*" hidden />
 

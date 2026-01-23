@@ -1,8 +1,7 @@
 // ================= MOCK AUTH =================
 
-// тимчасовий mock-користувач
 const MOCK_USER = {
-  email: "test@test.com",
+  email: "demo@skinai.app",
   name: "Demo User",
 };
 

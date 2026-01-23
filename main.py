@@ -1,27 +1,28 @@
+import uuid
+import shutil
+import os
+
 from fastapi import FastAPI, Request, UploadFile, File, Depends, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from api.history import router as history_router
-from database import Base, engine
-from models import history 
-
-Base.metadata.create_all(bind=engine)
-
-from ml.inference import analyze_image
-import uuid
-import shutil
-import os
-
+from api.doctor_visits import router as doctor_router
+from services.history_service import save_history
 from create_db import get_db
-from schemas.user_schema import UserCreate, UserRead
+from services.system_user import get_system_user
+from ml.inference import analyze_image
+from database import Base, engine
+from schemas.user_schema import UserCreate
 from models.user_model import User
 
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 app.include_router(history_router, prefix="/api")
+app.include_router(doctor_router, prefix="/api")
 templates = Jinja2Templates(directory="templates/html")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 os.makedirs("uploaded_files", exist_ok=True)
@@ -31,24 +32,33 @@ os.makedirs("uploaded_files", exist_ok=True)
 async def home(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
+
 @app.get("/faq")
 def faq(request: Request):
     return templates.TemplateResponse("faq.html", {"request": request})
+
 
 @app.get("/login")
 def login(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
+
 @app.get("/register")
 def register(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
+
 
 @app.get("/dashboard")
 def register(request: Request):
     return templates.TemplateResponse("dashboard.html", {"request": request})
 
+
 @app.post("/analyze")
-async def analyze(image: UploadFile = File(...)):
+async def analyze(
+    image: UploadFile = File(...),
+    tag: str | None = Form(None),
+    db: Session = Depends(get_db),
+):
     filename = f"{uuid.uuid4()}.jpg"
     path = f"uploaded_files/{filename}"
 
@@ -57,11 +67,21 @@ async def analyze(image: UploadFile = File(...)):
 
     result = analyze_image(path)
 
-    return {
-        "status": "success",
-        "result": result
-    }
-    
+    user = get_system_user()
+
+    save_history(
+        db=db,
+        user_id=user.id,
+        image_path=path,
+        prediction=result["prediction"],
+        probabilities=result["probabilities"],
+        tag=tag,
+        model_version="EfficientNet-B0-v1",
+    )
+
+    return {"status": "success", "result": result}
+
+
 @app.post("/upload")
 async def upload_file(file: UploadFile):
     with open(f"uploaded_files/{file.filename}", "wb") as buffer:
@@ -71,11 +91,11 @@ async def upload_file(file: UploadFile):
 
 @app.post("/login", response_class=HTMLResponse)
 async def login(
-            email: str = Form(...), 
-            password: str = Form(...),
-            db: Session = Depends(get_db)
-            ):
-    user = db.query(User).filter(User.email == email and User.password == password).first()
+    email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)
+):
+    user = (
+        db.query(User).filter(User.email == email and User.password == password).first()
+    )
     if user:
         return templates.TemplateResponse("home.html", {"request": Request})
     else:
@@ -83,7 +103,7 @@ async def login(
 
 
 @app.post("/signup", response_model=UserCreate)
-async def signup( user: UserCreate, db: Session = Depends(get_db)):
+async def signup(user: UserCreate, db: Session = Depends(get_db)):
     new_user = User(**user.model_dump())
     db.add(new_user)
     db.commit()
